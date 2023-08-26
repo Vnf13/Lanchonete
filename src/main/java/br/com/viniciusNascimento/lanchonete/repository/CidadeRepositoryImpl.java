@@ -1,0 +1,38 @@
+package br.com.viniciusNascimento.lanchonete.repository;
+
+import br.com.viniciusNascimento.lanchonete.model.Cidade;
+import br.com.viniciusNascimento.lanchonete.model.Estado;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+    @Repository
+    public class CidadeRepositoryImpl implements CidadeRepository {
+
+        @PersistenceContext
+        private EntityManager manager;
+        @Override
+        @Transactional
+        public Cidade save(Cidade cidade) {
+            return manager.merge(cidade);
+        }
+        @Override
+        public List<Cidade> findAll() {
+            return manager.createQuery("from Cidade",
+                    Cidade.class).getResultList();
+        }
+        @Override
+        public Cidade findById(Long id) {
+            return manager.find(Cidade.class, id);
+        }
+        @Override
+        @Transactional
+        public void deleteById(Long id) {
+            Cidade cidade = findById(id);
+            manager.remove(cidade);
+        }
+
+    }
