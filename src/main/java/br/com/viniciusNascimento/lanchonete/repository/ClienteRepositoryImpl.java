@@ -10,7 +10,30 @@ import java.util.List;
 
 @Component
 public class ClienteRepositoryImpl implements ClienteRepository {
+    @PersistenceContext
+    private EntityManager manager;
+    @Override
+    @Transactional
+    public Cliente save(Cliente cliente) {
+        return manager.merge(cliente);
+    }
+    @Override
+    public List<Cliente> findAll() {
+        return manager.createQuery("from Cliente",
+                Cliente.class).getResultList();
+    }
+    @Override
+    public Cliente findById(Long id) {
+        return manager.find(Cliente.class, id);
+    }
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        Cliente cliente = findById(id);
+        manager.remove(cliente);
+    }
 
+    /*
     @PersistenceContext
     private EntityManager manager;
     @Override
@@ -22,6 +45,8 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     public Cliente buscar(Long id) {
         return manager.find(Cliente.class, id);
     }
+
+
     @Override
     @Transactional
     public Cliente salvar(Cliente cliente) {
@@ -34,5 +59,5 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         System.out.println("cliente: "+cliente.getId());
         cliente = buscar(cliente.getId());
         manager.remove(cliente);
-    }
+    }*/
 }

@@ -11,3 +11,8 @@ insert into cidade (estado_id,nome) values (1,'Cristalina');
 insert into cidade (estado_id,nome) values (2,'Paracatu');
 insert into cidade (estado_id,nome) values (3,'Brasilia');
 insert into cidade (estado_id,nome) values (4,'Roraima');
+
+insert into cozinha (nome) values ('Indiana');
+insert into cozinha (nome) values ('Japoneza');
+insert into cozinha (nome) values ('Mexicana');
+insert into cozinha (nome) values ('Mineira');
