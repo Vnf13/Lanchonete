@@ -1,6 +1,6 @@
 package br.com.viniciusNascimento.lanchonete.controller;
 
-import br.com.viniciusNascimento.lanchonete.exception.ProdutoNaoEncontradaException;
+import br.com.viniciusNascimento.lanchonete.exception.ProdutoNaoEncontradoException;
 import br.com.viniciusNascimento.lanchonete.model.Produto;
 import br.com.viniciusNascimento.lanchonete.repository.ProdutoRepository;
 import br.com.viniciusNascimento.lanchonete.service.CadastroProdutoService;
@@ -28,7 +28,7 @@ public class ProdutoController {
     public Produto buscar(@PathVariable Long produtoId){
         return produtoRepository.findById(produtoId)
                 .orElseThrow(()
-                        -> new ProdutoNaoEncontradaException
+                        -> new ProdutoNaoEncontradoException
                         ("Produto não encontrado"));
     }
     @PostMapping

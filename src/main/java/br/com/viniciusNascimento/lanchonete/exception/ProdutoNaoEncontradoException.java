@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND,reason = "Entidade não encontrada")
 
-    public class ProdutoNaoEncontradaException extends RuntimeException {
+    public class ProdutoNaoEncontradoException extends RuntimeException {
         private static final long serialVersionUID = 1L;
 
-        public ProdutoNaoEncontradaException(String mensagem) {
+        public ProdutoNaoEncontradoException(String mensagem) {
             super(mensagem);
         }
 

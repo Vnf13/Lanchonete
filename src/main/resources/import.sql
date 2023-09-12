@@ -16,3 +16,7 @@ insert into cozinha (nome) values ('Indiana');
 insert into cozinha (nome) values ('Japoneza');
 insert into cozinha (nome) values ('Mexicana');
 insert into cozinha (nome) values ('Mineira');
+
+insert into produto (nome, descricao, preco, ativo) values ('sushi', 'peixe cru', 10.5, true);
+insert into produto (nome, descricao, preco, ativo) values ('almoco', 'antes da janta', 15.15,true);
+insert into produto (nome, descricao, preco, ativo) values ('jantar', 'depois do almoco', 25.15,true);

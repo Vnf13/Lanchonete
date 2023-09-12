@@ -5,6 +5,7 @@ import br.com.viniciusNascimento.lanchonete.model.Estado;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,10 +29,20 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
     public Cozinha findById(Long id) {
         return manager.find(Cozinha.class, id);
     }
+    /*@Override
+    @Transactional
+    public void deleteById(Long id) {
+        Cozinha cozinha = findById(id);
+        manager.remove(cozinha);
+    }*/
+
     @Override
     @Transactional
     public void deleteById(Long id) {
         Cozinha cozinha = findById(id);
+        if (cozinha == null){
+            throw new EmptyResultDataAccessException(1);
+        }
         manager.remove(cozinha);
     }
 
