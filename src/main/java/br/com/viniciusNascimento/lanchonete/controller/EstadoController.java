@@ -28,9 +28,16 @@ public class EstadoController {
     public Estado buscar(@PathVariable Long estadoId){
         return estadoRepository.findById(estadoId);
     }
+    /*
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Estado adicionar(@RequestBody Estado estado) {
+        return cadastroEstadoService.salvar(estado);
+    }*/
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Estado adicionar(@RequestBody
+                            @Valid Estado estado) {
         return cadastroEstadoService.salvar(estado);
     }
     @DeleteMapping("/{estadoId}")
