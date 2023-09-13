@@ -46,15 +46,15 @@ public class ProdutoController {
         cadastroProdutoService.remover(produtoId);
     }
     @PutMapping("/{produtoId}")
-    public ResponseEntity<Produto>
+    public ResponseEntity<?>
     atualizar(@PathVariable Long produtoId,
-              @RequestBody Optional<Produto> produto){
+              @RequestBody Produto produto){
         Optional<Produto> produtoAtual
                 = produtoRepository.findById(produtoId);
         if(produtoAtual.isPresent()){
             BeanUtils.copyProperties
                     (produto, produtoAtual.get(), "id");
-            Produto produtoSalvo
+                 Produto produtoSalvo
                     = cadastroProdutoService.salvar(produtoAtual.get());
             return ResponseEntity.ok(produtoSalvo);
         }
@@ -62,19 +62,19 @@ public class ProdutoController {
     }
 
     @PatchMapping("/{produtoId}")
-    public ResponseEntity<Produto> atualizarParcial
+    public ResponseEntity<?> atualizarParcial
             (@PathVariable Long produtoId,
              @RequestBody Map<String, Object> campos) {
-        Optional<Produto> produtoAtual
+        Optional<Produto>  produtoAtual
                 = produtoRepository.findById(produtoId);
-        if (produtoAtual == null) {
+        if (produtoAtual.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        merge(campos,  produtoAtual);
-        return atualizar(produtoId, produtoAtual);
+        merge(campos, produtoAtual.get());
+        return atualizar(produtoId, produtoAtual.get());
     }
     private void merge(Map<String, Object> dadosOrigem,
-                       Optional<Produto> produtoDestino) {
+                           Produto produtoDestino) {
         ObjectMapper objectMapper = new ObjectMapper();
         Produto produtoOrigem =
                 objectMapper.convertValue(dadosOrigem,
@@ -86,7 +86,7 @@ public class ProdutoController {
             Object novoValor =
                     ReflectionUtils.getField(field, produtoOrigem);
             ReflectionUtils.setField(field,
-                    produtoDestino, novoValor);
+                     produtoDestino, novoValor);
         });
     }
 }
