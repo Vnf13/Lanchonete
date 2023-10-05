@@ -2,7 +2,6 @@ package br.com.viniciusNascimento.lanchonete.controller;
 
 import br.com.viniciusNascimento.lanchonete.model.Cozinha;
 import br.com.viniciusNascimento.lanchonete.repository.CozinhaRepositoryImpl;
-import br.com.viniciusNascimento.lanchonete.repository.EstadoRepositoryImpl;
 import br.com.viniciusNascimento.lanchonete.service.CadastroCozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

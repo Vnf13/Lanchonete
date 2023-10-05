@@ -11,8 +11,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -26,5 +24,4 @@ public class Cliente extends Pessoa{
     @NotNull
     @Email
     private String email;
-
 }
