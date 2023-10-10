@@ -1,6 +1,6 @@
 package br.com.viniciusNascimento.lanchonete.repository;
 
-import br.com.viniciusNascimento.lanchonete.model.Estado;
+import br.com.viniciusNascimento.lanchonete.domain.model.Estado;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

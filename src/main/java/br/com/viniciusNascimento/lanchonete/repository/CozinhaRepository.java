@@ -1,7 +1,7 @@
 package br.com.viniciusNascimento.lanchonete.repository;
 
 
-import br.com.viniciusNascimento.lanchonete.model.Cozinha;
+import br.com.viniciusNascimento.lanchonete.domain.model.Cozinha;
 
 import java.util.List;
 

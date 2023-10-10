@@ -1,10 +1,14 @@
 package br.com.viniciusNascimento.lanchonete.controller;
 
-import br.com.viniciusNascimento.lanchonete.model.Cidade;
-import br.com.viniciusNascimento.lanchonete.model.Cliente;
+import br.com.viniciusNascimento.lanchonete.api.mapper.ClienteMapper;
+import br.com.viniciusNascimento.lanchonete.api.model.ClienteModel;
+import br.com.viniciusNascimento.lanchonete.api.model.input.ClienteInputModel;
+import br.com.viniciusNascimento.lanchonete.domain.model.Cliente;
+import br.com.viniciusNascimento.lanchonete.exception.EntidadeNaoEncontradaException;
 import br.com.viniciusNascimento.lanchonete.repository.ClienteRepositoryImpl;
 import br.com.viniciusNascimento.lanchonete.service.CadastroClienteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +25,20 @@ import java.util.Map;
 public class ClienteController {
 
     @Autowired
+    private ClienteMapper clienteMapper;
+    @Autowired
     private CadastroClienteService cadastroClienteService;
     @Autowired
     private ClienteRepositoryImpl clienteRepository;
-    @GetMapping
+    /*@GetMapping
     public List<Cliente> listar(){
         return clienteRepository.findAll();
+    }*/
+    @Autowired
+    public List<ClienteModel> listar(){
+        return clienteMapper
+                .toCollectionModel(clienteRepository
+                        .findAll());
     }
     @GetMapping("/{clienteId}")
     public Cliente buscar(@PathVariable Long clienteId){
@@ -34,8 +46,16 @@ public class ClienteController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente adicionar(@RequestBody Cliente clienteId) {
-        return cadastroClienteService.salvar(clienteId);
+    public ClienteModel adicionar(@Valid @RequestBody
+                                  ClienteInputModel clienteRequestModel) {
+        try {
+            return clienteMapper.toModel(cadastroClienteService
+                    .salvar(clienteMapper
+                            .toEntity(clienteRequestModel)));
+        }catch (EntidadeNaoEncontradaException e){
+          //  throw new NegocioException(e.getMessage());
+            return null;
+        }
     }
     @DeleteMapping("/{clienteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -84,6 +104,8 @@ public class ClienteController {
                     clienteDestino, novoValor);
         });
     }
+
+
     /*
    @Autowired //Injeção de dependecias
     private ClienteRepository clienteRepository;

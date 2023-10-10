@@ -1,15 +1,12 @@
 package br.com.viniciusNascimento.lanchonete.repository;
 
-import br.com.viniciusNascimento.lanchonete.model.Cliente;
-import br.com.viniciusNascimento.lanchonete.model.Estado;
+import br.com.viniciusNascimento.lanchonete.domain.model.Estado;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-import static java.nio.file.Files.find;
 
 @Repository
 public class EstadoRepositoryImpl implements EstadoRepository {

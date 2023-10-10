@@ -1,7 +1,7 @@
 package br.com.viniciusNascimento.lanchonete.controller;
 
 import br.com.viniciusNascimento.lanchonete.exception.ProdutoNaoEncontradoException;
-import br.com.viniciusNascimento.lanchonete.model.Produto;
+import br.com.viniciusNascimento.lanchonete.domain.model.Produto;
 import br.com.viniciusNascimento.lanchonete.repository.ProdutoRepository;
 import br.com.viniciusNascimento.lanchonete.service.CadastroProdutoService;
 import com.fasterxml.jackson.databind.ObjectMapper;

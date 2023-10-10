@@ -2,14 +2,12 @@ package br.com.viniciusNascimento.lanchonete.service;
 
 import br.com.viniciusNascimento.lanchonete.exception.EntidadeEmUsoException;
 import br.com.viniciusNascimento.lanchonete.exception.EntidadeNaoEncontradaException;
-import br.com.viniciusNascimento.lanchonete.model.Produto;
+import br.com.viniciusNascimento.lanchonete.domain.model.Produto;
 import br.com.viniciusNascimento.lanchonete.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CadastroProdutoService {

@@ -1,6 +1,6 @@
 package br.com.viniciusNascimento.lanchonete.repository;
 
-import br.com.viniciusNascimento.lanchonete.model.Cliente;
+import br.com.viniciusNascimento.lanchonete.domain.model.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;

@@ -2,10 +2,8 @@ package br.com.viniciusNascimento.lanchonete.service;
 
 import br.com.viniciusNascimento.lanchonete.exception.EntidadeEmUsoException;
 import br.com.viniciusNascimento.lanchonete.exception.EntidadeNaoEncontradaException;
-import br.com.viniciusNascimento.lanchonete.model.Cozinha;
-import br.com.viniciusNascimento.lanchonete.model.Estado;
+import br.com.viniciusNascimento.lanchonete.domain.model.Cozinha;
 import br.com.viniciusNascimento.lanchonete.repository.CozinhaRepository;
-import br.com.viniciusNascimento.lanchonete.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;

@@ -2,8 +2,7 @@ package br.com.viniciusNascimento.lanchonete.service;
 
 import br.com.viniciusNascimento.lanchonete.exception.EntidadeEmUsoException;
 import br.com.viniciusNascimento.lanchonete.exception.EntidadeNaoEncontradaException;
-import br.com.viniciusNascimento.lanchonete.model.Cidade;
-import br.com.viniciusNascimento.lanchonete.model.Estado;
+import br.com.viniciusNascimento.lanchonete.domain.model.Cidade;
 import br.com.viniciusNascimento.lanchonete.repository.CidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

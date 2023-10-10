@@ -1,4 +1,4 @@
-package br.com.viniciusNascimento.lanchonete.model;
+package br.com.viniciusNascimento.lanchonete.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
