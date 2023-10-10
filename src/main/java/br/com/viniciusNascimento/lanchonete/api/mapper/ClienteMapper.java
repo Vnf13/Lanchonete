@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class ClienteMapper {
 
     private ModelMapper modelMapper;
-
     public ClienteModel toModel(Cliente cliente) {
         return modelMapper.map(cliente, ClienteModel.class);
     }
