@@ -1,14 +1,10 @@
 package br.com.viniciusNascimento.lanchonete.controller;
 
-import br.com.viniciusNascimento.lanchonete.api.mapper.ClienteMapper;
-import br.com.viniciusNascimento.lanchonete.api.model.ClienteModel;
-import br.com.viniciusNascimento.lanchonete.api.model.input.ClienteInputModel;
 import br.com.viniciusNascimento.lanchonete.domain.model.Cliente;
-import br.com.viniciusNascimento.lanchonete.exception.EntidadeNaoEncontradaException;
-import br.com.viniciusNascimento.lanchonete.repository.ClienteRepositoryImpl;
+import br.com.viniciusNascimento.lanchonete.exception.ClienteNaoEncontradoException;
+import br.com.viniciusNascimento.lanchonete.repository.ClienteRepository;
 import br.com.viniciusNascimento.lanchonete.service.CadastroClienteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,59 +15,55 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-
-    @Autowired
-    private ClienteMapper clienteMapper;
     @Autowired
     private CadastroClienteService cadastroClienteService;
     @Autowired
-    private ClienteRepositoryImpl clienteRepository;
-    /*@GetMapping
+    private ClienteRepository clienteRepository;
+    @GetMapping
     public List<Cliente> listar(){
         return clienteRepository.findAll();
-    }*/
-    @Autowired
-    public List<ClienteModel> listar(){
-        return clienteMapper
-                .toCollectionModel(clienteRepository
-                        .findAll());
     }
+    @GetMapping("/Josimar")
+    public List<Cliente> clientePorNome (){
+        String nome = "josi";
+        return clienteRepository.findByNomeContaining(nome);
+    }
+
+
     @GetMapping("/{clienteId}")
     public Cliente buscar(@PathVariable Long clienteId){
-        return clienteRepository.findById(clienteId);
+        return clienteRepository.findById(clienteId)
+                .orElseThrow(()
+                        -> new ClienteNaoEncontradoException
+                        ("Produto não encontrado"));
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClienteModel adicionar(@Valid @RequestBody
-                                  ClienteInputModel clienteRequestModel) {
-        try {
-            return clienteMapper.toModel(cadastroClienteService
-                    .salvar(clienteMapper
-                            .toEntity(clienteRequestModel)));
-        }catch (EntidadeNaoEncontradaException e){
-          //  throw new NegocioException(e.getMessage());
-            return null;
-        }
+    public Cliente adicionar(@RequestBody Cliente cliente) {
+        return cadastroClienteService.salvar(cliente);
     }
     @DeleteMapping("/{clienteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover (@PathVariable Long clienteId){
         cadastroClienteService.remover(clienteId);
     }
-
     @PutMapping("/{clienteId}")
-    public ResponseEntity<Cliente> atualizar
-            (@PathVariable Long clienteId,
-             @RequestBody Cliente cliente){
-        Cliente clienteAtual = clienteRepository.findById(clienteId);
-        if(clienteAtual != null){
-            BeanUtils.copyProperties(cliente, clienteAtual, "id");
-            Cliente clienteSalva = cadastroClienteService.salvar(clienteAtual);
-            return ResponseEntity.ok(clienteSalva);
+    public ResponseEntity<?>
+    atualizar(@PathVariable Long clienteId,
+              @RequestBody Cliente cliente){
+        Optional<Cliente> clienteAtual
+                = clienteRepository.findById(clienteId);
+        if(clienteAtual.isPresent()){
+            BeanUtils.copyProperties
+                    (cliente, clienteAtual.get(), "id");
+            Cliente clienteSalvo
+                    = cadastroClienteService.salvar(clienteAtual.get());
+            return ResponseEntity.ok(clienteSalvo);
         }
         return ResponseEntity.notFound().build();
     }
@@ -80,12 +72,13 @@ public class ClienteController {
     public ResponseEntity<?> atualizarParcial
             (@PathVariable Long clienteId,
              @RequestBody Map<String, Object> campos) {
-        Cliente clienteAtual = clienteRepository.findById(clienteId);
-        if (clienteAtual == null) {
+        Optional<Cliente>  clienteAtual
+                = clienteRepository.findById(clienteId);
+        if (clienteAtual.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        merge(campos,  clienteAtual);
-        return atualizar(clienteId, clienteAtual);
+        merge(campos, clienteAtual.get());
+        return atualizar(clienteId, clienteAtual.get());
     }
     private void merge(Map<String, Object> dadosOrigem,
                        Cliente clienteDestino) {
@@ -94,15 +87,15 @@ public class ClienteController {
                 objectMapper.convertValue(dadosOrigem,
                         Cliente.class);
         dadosOrigem.forEach((nomePropriedade, valorPropriedade)
-                -> {
-            Field field = ReflectionUtils.findField(
-                    Cliente.class, nomePropriedade);
+                -> {Field field = ReflectionUtils.findField(
+                Cliente.class, nomePropriedade);
             field.setAccessible(true);
             Object novoValor =
                     ReflectionUtils.getField(field, clienteOrigem);
             ReflectionUtils.setField(field,
                     clienteDestino, novoValor);
         });
+    }
     }
 
 
@@ -130,4 +123,4 @@ public class ClienteController {
         clienteRepository.remover(buscar(clienteId));
     }*/
 
-}
+
